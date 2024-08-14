@@ -123,30 +123,64 @@ In the script, we utilize the comparison between our DEBATunE 7b and Vicuna 7B v
 
 Please consider citing our paper if you think our codes, data, or models are useful. Thank you!
 ```
-@article{Li2024CanLS,
-  title={Can LLMs Speak For Diverse People? Tuning LLMs via Debate to Generate Controllable Controversial Statements},
-  author={Ming Li and Jiuhai Chen and Lichang Chen and Tianyi Zhou},
-  journal={ArXiv},
-  year={2024},
-  volume={abs/2402.10614},
-  url={https://api.semanticscholar.org/CorpusID:267740270}
+@inproceedings{li-etal-2024-llms-speak,
+    title = "Can {LLM}s Speak For Diverse People? Tuning {LLM}s via Debate to Generate Controllable Controversial Statements",
+    author = "Li, Ming  and
+      Chen, Jiuhai  and
+      Chen, Lichang  and
+      Zhou, Tianyi",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Findings of the Association for Computational Linguistics ACL 2024",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand and virtual meeting",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.findings-acl.956",
+    pages = "16160--16176",
 }
 
-@article{Li2024SelectiveRS,
-  title={Selective Reflection-Tuning: Student-Selected Data Recycling for LLM Instruction-Tuning},
-  author={Ming Li and Lichang Chen and Jiuhai Chen and Shwai He and Jiuxiang Gu and Tianyi Zhou},
-  journal={ArXiv},
-  year={2024},
-  volume={abs/2402.10110},
-  url={https://api.semanticscholar.org/CorpusID:267682220}
+@inproceedings{li-etal-2024-selective,
+    title = "Selective Reflection-Tuning: Student-Selected Data Recycling for {LLM} Instruction-Tuning",
+    author = "Li, Ming  and
+      Chen, Lichang  and
+      Chen, Jiuhai  and
+      He, Shwai  and
+      Gu, Jiuxiang  and
+      Zhou, Tianyi",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Findings of the Association for Computational Linguistics ACL 2024",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand and virtual meeting",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.findings-acl.958",
+    pages = "16189--16211",
 }
 
-@inproceedings{li2023reflectiontuning,
-  title={Reflection-Tuning: Recycling Data for Better Instruction-Tuning},
-  author={Ming Li and Lichang Chen and Jiuhai Chen and Shwai He and Tianyi Zhou},
-  booktitle={NeurIPS 2023 Workshop on Instruction Tuning and Instruction Following},
-  year={2023},
-  url={https://openreview.net/forum?id=xaqoZZqkPU}
+@inproceedings{li-etal-2024-superfiltering,
+    title = "Superfiltering: Weak-to-Strong Data Filtering for Fast Instruction-Tuning",
+    author = "Li, Ming  and
+      Zhang, Yong  and
+      He, Shwai  and
+      Li, Zhitao  and
+      Zhao, Hongyu  and
+      Wang, Jianzong  and
+      Cheng, Ning  and
+      Zhou, Tianyi",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.769",
+    pages = "14255--14273",
 }
 
 ```
