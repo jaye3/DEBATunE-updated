@@ -10,7 +10,9 @@ import json
 import re
 
 import time
-import openai
+from openai import OpenAI
+
+client = None
 
 import tiktoken
 gpt_encoder = tiktoken.get_encoding("cl100k_base")
@@ -97,18 +99,20 @@ def call_chat(args, sys_prompt, prompt, max_tokens):
     wait_base = 10
     while response== '':
         try:
-            completion = openai.ChatCompletion.create(
-                        model=args.model_engine,
-                        messages=message,
-                        temperature=args.temperature,
-                        max_tokens=max_tokens,
-                        top_p=args.top_p,
-            )
+            print(f"[{time.strftime('%H:%M:%S')}] Calling model {args.model_engine} | prompt tokens: {len(gpt_encoder.encode(prompt))} | max_tokens={max_tokens}")
+            completion = client.chat.completions.create(model=args.model_engine,
+            messages=message,
+            temperature=args.temperature,
+            max_tokens=max_tokens,
+            top_p=args.top_p)
             response = completion.choices[0].message.content
-        except:
+            print(f"[{time.strftime('%H:%M:%S')}] ✅ Response received ({len(response.split())} words)")
+
+        except Exception as e:
+            print(f"[{time.strftime('%H:%M:%S')}] ❌ API call failed ({type(e).__name__}): {e}")
             retry += 1
             time.sleep(wait_base)
-            wait_base = wait_base*2
+            wait_base = min(wait_base * 2, 120)
     return response
 
 def init_jsonl_file(args):
@@ -131,14 +135,15 @@ def init_jsonl_file(args):
     return sampled_data
 
 def main():
+    global client
+
     args = parse_args()
-    if args.api_base != '':
-        openai.api_base = args.api_base
-    openai.api_key = args.api_key
+    client = OpenAI(api_key=args.api_key)
 
     sampled_data = init_jsonl_file(args)
 
     for topic in tqdm(sampled_data):
+        print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] Starting topic: {topic}")
         temp_dict = {}
         temp_dict['topic'] = topic
 
@@ -164,6 +169,8 @@ def main():
             temp_dict[side1]['arguments'] = arguments
 
             for argument in arguments:
+                print(f"  -> [{side1}] Argument: {argument[:60]}...")
+
                 temp_dict[side1][argument] = []
                 # print("===========================Argument===========================")
                 # print(argument)
@@ -171,13 +178,19 @@ def main():
 
                 # Debate for each argument
                 Agent1_0_prompt = Agent1_0.format_map({"topic":topic,"argument":argument,"side1":side1,"side2":side2})
+                print(f"    [Stage] Agent1_0 starting...")
                 Agent1_0_argument = call_chat(args, Agent1_sys_prompt, Agent1_0_prompt, 800)
+                print(f"    [Stage] Agent1_0 done ({len(Agent1_0_argument.split())} words)")
+
                 temp_dict[side1][argument].append(Agent1_0_argument)
                 # print('===========================Agent1_0_prompt===========================')
                 # print(Agent1_0_argument)
-                
+
                 Agent2_0_prompt = Agent2_0.format_map({"topic":topic,"argument":argument,"side1":side1,"side2":side2,"argument_1_0":Agent1_0_argument})
+                print(f"    [Stage] Agent2_0 starting...")
                 Agent2_0_argument = call_chat(args, Agent2_sys_prompt, Agent2_0_prompt, 800)
+                print(f"    [Stage] Agent1_0 done ({len(Agent1_0_argument.split())} words)")
+
                 temp_dict[side1][argument].append(Agent2_0_argument)
                 # print('===========================Agent2_0_prompt===========================')
                 # print(Agent2_0_argument)
