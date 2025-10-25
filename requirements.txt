@@ -6,3 +6,4 @@ tqdm
 scikit-learn
 tiktoken
 matplotlib
+torch
